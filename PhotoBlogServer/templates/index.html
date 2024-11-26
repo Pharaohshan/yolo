@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Live Stream</title>
+</head>
+<body>
+    <h1>实时摄像头流</h1>
+    <img src="/" alt="Live Feed" id="camera-feed" style="width: 80%; border: 1px solid #ddd;">
+
+    <h2>操作</h2>
+    <button id="capture-btn">捕获截图并分割</button>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('capture-btn').addEventListener('click', async () => {
+            const response = await fetch('/capture/', { method: 'POST' });
+            const data = await response.json();
+            if (data.status === 'success') {
+                document.getElementById('result').innerHTML = `<img src="${data.path}" alt="Segmented Image" style="width: 80%; border: 1px solid #ddd;">`;
+            } else {
+                alert('Failed to capture and segment image.');
+            }
+        });
+    </script>
+</body>
+</html>
